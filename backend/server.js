@@ -9,7 +9,7 @@ import MealRoutes from "./src/routes/Meal.js";
 dotenv.config();
 
 const app = express();
-const allowedOrigins = ["http://localhost:5173", process.env.CLIENT_URL, process.env.CLIENT_URL_1];
+const allowedOrigins = ["http://localhost:5000", process.env.CLIENT_URL, process.env.CLIENT_URL_1, "http://52.202.131.163:5000"];
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -60,7 +60,7 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
   try {
     connectDB();
-    app.listen(8080, () => console.log("Server started on port 8080"));
+    app.listen(5000, '0.0.0.0', () => console.log("Server started on port5000"));
   } catch (error) {
     console.log(error);
   }

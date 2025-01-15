@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://testing-435o.onrender.com/api",
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 export const UserSignUp = async (data) => API.post("/user/signup", data);
@@ -25,7 +25,7 @@ export const addWorkout = async (token, data) =>
 export const fetchData = async () => {
   try {
     const response = await axios.get(
-      "https://testing-435o.onrender.com/api/food"
+      process.env.REACT_APP_API_URL
     );
     return response.data;
   } catch (error) {
