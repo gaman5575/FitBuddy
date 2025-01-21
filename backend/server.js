@@ -60,7 +60,8 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
   try {
     connectDB();
-    app.listen(5001, '0.0.0.0', () => console.log("Server started on port 5001"));
+    const port = process.env.PORT || 5000;  // Use the port from .env or default to 5000
+    app.listen(port, '0.0.0.0', () => console.log(`Server started on port ${port}`));
   } catch (error) {
     console.log(error);
   }
