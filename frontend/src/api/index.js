@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 export const UserSignUp = async (data) => API.post("/user/signup", data);
@@ -22,17 +22,15 @@ export const addWorkout = async (token, data) =>
     headers: { Authorization: `Bearer ${token}` },
   });
 
-export const fetchData = async () => {
-  try {
-    const response = await axios.get(
-      process.env.REACT_APP_API_URL
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return [];
-  }
-};
+  export const fetchData = async () => {
+    try {
+      const response = await axios.get(import.meta.env.VITE_API_URL);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  };
 
 export const getMeals = async (token, queryParams = "") => {
   try {
