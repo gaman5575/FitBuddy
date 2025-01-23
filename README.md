@@ -104,15 +104,93 @@ cd backEnd/
 # Run the server
 npm run start
 ```
+
+
+The project uses a mock server deployed using JSON-server on Render. The server can be accessed here:
+
+If you would like to run a local server instead, use the following commands:
+
+bash
+Copy
+# Move into the BackEnd directory
+cd backEnd/
+
+# Run the server
+npm run start
+Running the Project with Docker Locally (For Testing)
+Once you have Docker installed on your machine, you can run both the frontend and backend services inside Docker containers for testing locally.
+
+1. Building and Running the Backend with Docker:
+To run the backend locally using Docker, follow these steps:
+
+Build the Backend Docker Image:
+
+Inside your backend directory, run the following command:
+
+bash
+Copy
+docker build -t fitbuddy-backend .
+Run the Backend Container:
+
+Run the following Docker command to start the backend container:
+
+bash
+Copy
+docker run -d \
+  --name fitbuddy-backend \
+  --network fitbuddy-network \
+  -p 5000:5000 \
+  -e CLIENT_URL=http://localhost:5173 \
+  -e CLIENT_URL_1=http://another-client-url.com \
+  -e mongo_url="mongodb+srv://<your-mongo-db-connection>" \
+  -e JWT=fitbuddy \
+  fitbuddy-backend
+Note: Replace <your-mongo-db-connection> with your actual MongoDB connection string.
+
+2. Building and Running the Frontend with Docker:
+To run the frontend locally using Docker, follow these steps:
+
+Build the Frontend Docker Image:
+
+Inside your frontend directory, run the following command:
+
+bash
+Copy
+docker build -t fitbuddy-frontend .
+Run the Frontend Container:
+
+Run the following Docker command to start the frontend container:
+
+bash
+Copy
+docker run -d \
+  --name fitbuddy-frontend \
+  --network fitbuddy-network \
+  -p 5173:80 \
+  -e VITE_API_URL=http://localhost:5000/api \
+  fitbuddy-frontend
+This will make the frontend accessible on http://localhost:5173 and it will communicate with the backend running on http://localhost:5000.
+
+3. Accessing the App Locally:
+Frontend: After running the Docker container for the frontend, you can access the application by opening your browser and navigating to http://localhost:5173.
+Backend: The backend API will be available at http://localhost:5000.
+
+Acknowledgments
+Inspired by the original FitBuddy website.
+Special thanks to our dedicated team for their invaluable contributions to FitBuddy, and to our mentor/IA Aashish Kumar.
+vbnet
+Copy
+
+---
+
+### Where You Add the Docker Section:
+- **Location**: Place the new **Running the Project with Docker Locally (For Testing)** section **just before the "Contributors"** and **"Acknowledgments"** sections.
+- This way, users will follow the installation instructions first, then be able to check the Docker instructions at the end if they wish to run it with Docker locally for testing.
+
+This addition ensures that Docker-based testing is well-documented and easy to reference in the futur
+
+
 ### Contributors
 
 - [Shobhit Gupta](https://github.com/shobhit9742)
-- [Jayant Jagtap](https://github.com/jayantjagtap001)
-- [Ashwin Bhagat](https://github.com/asbhagat2020)
-- [Shreya Kushwaha](https://github.com/shreya-kushwaha40)
-
-### Acknowledments
-
-- Inspired by the original FitBuddy website.
-- Special thanks to our dedicated team for their invaluable contributions to FitBuddy, and to our mentor/IA Aashish Kumar
 
