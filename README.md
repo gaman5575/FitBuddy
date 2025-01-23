@@ -104,15 +104,104 @@ cd backEnd/
 # Run the server
 npm run start
 ```
+Deploying on EC2 (AWS)
+To deploy your FitBuddy app on AWS EC2 using Docker, follow the steps below:
+
+1. Set Up an EC2 Instance
+Instance Type: t2.medium or t3.medium (2 vCPUs, 4 GB RAM)
+OS: Ubuntu 20.04
+Security Group:
+Open port 22 (SSH) for remote access.
+Open port 80 (HTTP), 443 (HTTPS), 5000 (Backend), and 5173 (Frontend) for web access.
+2. Connect to the EC2 Instance
+After launching the EC2 instance, connect to it using SSH:
+
+bash
+Copy
+ssh -i your-key.pem ubuntu@<your-ec2-public-ip>
+3. Install Docker on EC2
+Once connected to the EC2 instance, install Docker:
+
+bash
+Copy
+# Update packages
+sudo apt-get update
+
+# Install Docker
+sudo apt install docker.io
+
+# Start Docker and enable it to start on boot
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Verify Docker installation
+docker --version
+4. Clone the FitBuddy Project
+Clone the FitBuddy repository on your EC2 instance or transfer the project files:
+
+bash
+Copy
+# Clone your repository
+git clone https://github.com/your-repo/FitBuddy.git
+
+# Move into the project directory
+cd FitBuddy
+5. Build Docker Images for Backend and Frontend
+Now, build the Docker images for both the backend and frontend:
+
+Backend Docker Image:
+bash
+Copy
+# Move to backend directory
+cd backend
+
+# Build the backend image
+docker build -t fitbuddy-backend .
+Frontend Docker Image:
+bash
+Copy
+# Move to frontend directory
+cd frontend
+
+# Build the frontend image
+docker build -t fitbuddy-frontend .
+6. Run Docker Containers for Backend and Frontend
+Run Backend Container:
+bash
+Copy
+docker run -d \
+  --name fitbuddy-backend \
+  --network fitbuddy-network \
+  -p 5000:5000 \
+  -e CLIENT_URL=http://<your-ec2-public-ip>:5173 \
+  -e CLIENT_URL_1=http://another-client-url.com \
+  -e mongo_url="mongodb+srv://<your-mongo-db-connection>" \
+  -e JWT=fitbuddy \
+  fitbuddy-backend
+Run Frontend Container:
+bash
+Copy
+docker run -d \
+  --name fitbuddy-frontend \
+  --network fitbuddy-network \
+  -p 5173:80 \
+  -e VITE_API_URL=http://<your-ec2-public-ip>:5000/api \
+  fitbuddy-frontend
+7. Access the Application
+The frontend will be available at http://<your-ec2-public-ip>:5173.
+The backend API will be available at http://<your-ec2-public-ip>:5000.
+8. Monitor Running Containers
+To check if both containers are running successfully:
+
+bash
+Copy
+docker ps
+
 ### Contributors
 
 - [Shobhit Gupta](https://github.com/shobhit9742)
-- [Jayant Jagtap](https://github.com/jayantjagtap001)
-- [Ashwin Bhagat](https://github.com/asbhagat2020)
-- [Shreya Kushwaha](https://github.com/shreya-kushwaha40)
-
 ### Acknowledments
 
 - Inspired by the original FitBuddy website.
-- Special thanks to our dedicated team for their invaluable contributions to FitBuddy, and to our mentor/IA Aashish Kumar
+- Special thanks to our dedicated team for their invaluable contributions to FitBuddy,
 
