@@ -9,7 +9,7 @@ import MealRoutes from "./src/routes/Meal.js";
 dotenv.config();
 
 const app = express();
-const allowedOrigins = ["http://localhost:5173", process.env.CLIENT_URL, process.env.CLIENT_URL_1, "http://52.202.131.163:5000"];
+const allowedOrigins = ["http://localhost:5173", "http://fitbuddy-frontend:5173", process.env.CLIENT_URL, process.env.CLIENT_URL_1, "http://52.202.131.163:5000"];
 
 const corsOptions = {
   origin: (origin, callback) => {
